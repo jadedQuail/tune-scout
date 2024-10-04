@@ -1,0 +1,24 @@
+I am adding this file so I can do a test commit!
+
+Also, while I'm here, I'm going to list a color palette I'm interested in using:
+
+Primary:
+
+-Electric Blue
+    #1E90FF
+-Midnight Navy
+    #191970
+
+Accent:
+
+-Lime Green
+    #32CD32
+-Neon Coral
+    #FF6F61
+
+Neutrals:
+
+-Soft Charcoal
+    #2E2E2E
+-Light Gray
+    #D3D3D3
