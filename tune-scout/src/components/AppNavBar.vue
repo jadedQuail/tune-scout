@@ -3,12 +3,12 @@
         class="w-full bg-electric-blue flex justify-between items-center p-4 fixed top-0"
     >
         <div class="flex space-x-4">
-            <AppButton label="Home" />
+            <AppButton label="Home" to="/" />
             <AppButton label="My Lists" />
         </div>
         <div class="flex space-x-4">
             <AppButton label="Sign Up" />
-            <AppButton label="Login" />
+            <AppButton label="Login" to="/login" />
         </div>
     </nav>
 </template>
