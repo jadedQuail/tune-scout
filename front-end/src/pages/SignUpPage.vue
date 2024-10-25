@@ -1,12 +1,12 @@
 <template>
     <div>
-        <AppNavBar :navState="NavStates.FULL" />
-        <AppHomePageCenter />
+        <AppNavBar :navState="NavStates.MINIMAL" />
+        <AppSignUpDialog />
     </div>
 </template>
 
 <script setup>
 import AppNavBar from "../components/AppNavBar.vue";
-import AppHomePageCenter from "../components/AppHomePageCenter.vue";
+import AppSignUpDialog from "../components/AppSignUpDialog.vue";
 import { NavStates } from "../utilities/constants";
 </script>

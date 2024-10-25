@@ -33,7 +33,6 @@ app.post("/register", async (req, res) => {
     } catch (err) {
         console.error(err);
         if (err.code === "ER_DUP_ENTRY") {
-            console.log("Duplicate entry!");
             return res.sendStatus(409);
         }
         res.sendStatus(500);
