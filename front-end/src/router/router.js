@@ -4,11 +4,13 @@ import { NavStates } from "../utilities/constants";
 import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import SignUpPage from "../pages/SignUpPage.vue";
+import ResultsPage from "../pages/ResultsPage.vue";
 
 const routes = [
     { path: "/", name: "Home", component: HomePage },
     { path: "/login", name: "Login", component: LoginPage },
     { path: "/sign-up", name: "SignUp", component: SignUpPage },
+    { path: "/results", name: "Results", component: ResultsPage },
 ];
 
 const router = createRouter({

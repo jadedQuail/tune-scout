@@ -1,12 +1,10 @@
 <template>
     <div>
         <AppNavBar />
-        <SearchDialog />
+        <p>Hi</p>
     </div>
 </template>
 
 <script setup>
 import AppNavBar from "../components/AppNavBar.vue";
-import SearchDialog from "../components/SearchDialog.vue";
-import { NavStates } from "../utilities/constants";
 </script>
