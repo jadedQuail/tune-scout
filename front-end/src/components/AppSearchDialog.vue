@@ -32,7 +32,10 @@ const searchTerm = ref("");
 
 const goToResults = () => {
     if (searchTerm.value.trim() !== "") {
-        router.push("/results");
+        router.push({
+            path: "/results",
+            query: { q: searchTerm.value },
+        });
     }
 };
 </script>
