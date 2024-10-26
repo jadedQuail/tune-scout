@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "../stores/useUserStore";
+import { NavStates } from "../utilities/constants";
 import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import SignUpPage from "../pages/SignUpPage.vue";
@@ -12,6 +14,20 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
+
+    if (userStore.user) {
+        userStore.setNavState(NavStates.LOGGED_IN);
+    } else if (to.name === "Login" || to.name === "SignUp") {
+        userStore.setNavState(NavStates.MINIMAL);
+    } else {
+        userStore.setNavState(NavStates.FULL);
+    }
+
+    next();
 });
 
 export default router;
