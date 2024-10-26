@@ -18,9 +18,9 @@
                     userStore.navState === NavStates.LOGGED_IN && userStore.user
                 "
             >
-                <span class="text-white text-2xl"
-                    >Hello, {{ userStore.user.username }}</span
-                >
+                <span class="text-white text-2xl">{{
+                    userStore.user.username
+                }}</span>
             </template>
             <template v-else-if="userStore.navState === NavStates.FULL">
                 <AppButton label="Sign Up" to="/sign-up" />
