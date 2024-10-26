@@ -6,6 +6,7 @@
             <AppButton label="Home" to="/" />
             <AppButton
                 label="My Lists"
+                to="/my-lists"
                 v-if="
                     userStore.navState === NavStates.LOGGED_IN ||
                     userStore.navState === NavStates.FULL

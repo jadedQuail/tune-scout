@@ -10,7 +10,7 @@
                 placeholder="Search..."
                 class="px-4 py-2 rounded-lg w-full text-lg"
             />
-            <AppButton label="Go" @click="goToResults" />
+            <AppButton class="ml-3" label="Go" @click="goToResults" />
         </div>
         <div class="flex flex-col items-center mt-6">
             <div class="text-white text-xl">

@@ -1,17 +1,18 @@
 <template>
     <div class="bg-electric-blue-600 min-h-screen flex flex-col items-center">
-        <div class="mt-20 text-2xl text-white w-3/4">
-            Click <strong>Add to List</strong> next to a search result to add
-            the song to one of your lists.
-        </div>
-        <div class="mt-6 text-2xl text-white w-3/4">
-            Don't like your results? Click <strong>Home</strong> to go back to
-            the main site page to perform another search! &#127901;
-        </div>
         <div class="mt-6 w-3/4 mx-auto">
             <div v-if="filteredSongs.length > 0">
+                <div class="mt-20 text-2xl text-white">
+                    Click <strong>Add to List</strong> next to a search result
+                    to add the song to one of your lists.
+                </div>
+                <div class="mt-6 text-2xl text-white">
+                    Don't like your results? Click <strong>Home</strong> to go
+                    back to the main site page to perform another search!
+                    &#127901;
+                </div>
                 <table
-                    class="mt-6 w-full text-left border-collapse border-2 border-gray-200"
+                    class="mt-10 w-full text-left border-collapse border-2 border-gray-200"
                 >
                     <thead>
                         <tr>
@@ -49,7 +50,7 @@
                     </tbody>
                 </table>
             </div>
-            <div v-else class="mt-6 text-2xl text-white text-center">
+            <div v-else class="text-2xl text-white text-center mt-20">
                 No results found. Go back to <strong>Home</strong> and try
                 another search.
             </div>
