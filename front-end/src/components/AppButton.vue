@@ -1,7 +1,7 @@
 <template>
     <button
         @click="handleClick"
-        class="bg-white text-electric-blue px-4 py-2 ml-3 rounded-lg text-lg font-semibold"
+        class="bg-white text-electric-blue-600 px-4 py-2 ml-3 rounded-lg text-lg font-semibold"
     >
         {{ label }}
     </button>

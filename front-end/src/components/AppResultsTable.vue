@@ -1,29 +1,40 @@
 <template>
-    <div
-        class="bg-electric-blue min-h-screen flex flex-col items-center justify-center"
-    >
-        <div class="mt-20">
+    <div class="bg-electric-blue-600 min-h-screen flex flex-col items-center">
+        <div class="mt-20 w-3/4 mx-auto">
             <div v-if="filteredSongs.length > 0">
                 <table
-                    class="mt-6 w-full text-left border-collapse border border-gray-200"
+                    class="mt-6 w-full text-left border-collapse border-2 border-gray-200"
                 >
                     <thead>
                         <tr>
-                            <th class="border border-gray-200 px-4 py-2">
+                            <th
+                                class="border-2 border-gray-200 px-4 py-2 text-white text-3xl"
+                            >
                                 Song and Artist
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(song, index) in filteredSongs" :key="index">
-                            <td class="border border-gray-200 px-4 py-2">
-                                {{ song.name }} by {{ song.artist }}
+                            <td
+                                class="border-2 border-gray-200 px-4 py-2 text-white text-3xl"
+                            >
+                                <span class="text-lime-green-200">
+                                    {{ song.name }}
+                                </span>
+                                by
+                                <span class="text-neon-coral-200">
+                                    {{ song.artist }}
+                                </span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div v-else class="mt-6 text-xl">No results found.</div>
+            <div v-else class="mt-6 text-2xl text-white text-center">
+                No results found. Go back to <strong>Home</strong> and try
+                another search.
+            </div>
         </div>
     </div>
 </template>

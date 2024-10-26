@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="w-full bg-electric-blue flex justify-between items-center p-4 fixed top-0"
+        class="w-full bg-electric-blue-600 flex justify-between items-center p-4 fixed top-0"
     >
         <div class="flex space-x-4">
             <AppButton label="Home" to="/" />

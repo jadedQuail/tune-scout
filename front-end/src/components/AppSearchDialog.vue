@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-electric-blue min-h-screen flex flex-col items-center justify-center"
+        class="bg-electric-blue-600 min-h-screen flex flex-col items-center justify-center"
     >
         <div class="text-white text-6xl mb-10">Tune Scout</div>
         <div class="flex w-1/4">
