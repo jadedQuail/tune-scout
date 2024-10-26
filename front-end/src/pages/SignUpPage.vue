@@ -1,6 +1,6 @@
 <template>
     <div>
-        <AppNavBar :navState="NavStates.MINIMAL" />
+        <AppNavBar />
         <AppSignUpDialog />
     </div>
 </template>

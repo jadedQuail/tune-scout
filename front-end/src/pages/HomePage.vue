@@ -1,6 +1,6 @@
 <template>
     <div>
-        <AppNavBar :navState="NavStates.FULL" />
+        <AppNavBar />
         <AppHomePageCenter />
     </div>
 </template>

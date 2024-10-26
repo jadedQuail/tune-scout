@@ -57,8 +57,10 @@ import AppButton from "../components/AppButton.vue";
 import { registerUser } from "../services/credentialService";
 import { NavStates } from "../utilities/constants";
 import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/useUserStore";
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const username = ref("");
 const password = ref("");
@@ -72,6 +74,7 @@ const handleSignUp = async () => {
 
     const success = await registerUser(username.value, password.value);
     if (success) {
+        userStore.setUser({ username: username.value });
         alert("User registered successfully!");
         router.push("/");
     } else {

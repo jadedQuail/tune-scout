@@ -7,22 +7,25 @@
             <AppButton
                 label="My Lists"
                 v-if="
-                    navState === NavStates.LOGGED_IN ||
-                    navState === NavStates.FULL
+                    userStore.navState === NavStates.LOGGED_IN ||
+                    userStore.navState === NavStates.FULL
                 "
             />
         </div>
         <div class="flex space-x-4">
-            <AppButton
-                label="Sign Up"
-                to="/sign-up"
-                v-if="navState === NavStates.FULL"
-            />
-            <AppButton
-                label="Login"
-                to="/login"
-                v-if="navState === NavStates.FULL"
-            />
+            <template
+                v-if="
+                    userStore.navState === NavStates.LOGGED_IN && userStore.user
+                "
+            >
+                <span class="text-white text-2xl"
+                    >Hello, {{ userStore.user.username }}</span
+                >
+            </template>
+            <template v-else-if="userStore.navState === NavStates.FULL">
+                <AppButton label="Sign Up" to="/sign-up" />
+                <AppButton label="Login" to="/login" />
+            </template>
         </div>
     </nav>
 </template>
@@ -30,12 +33,7 @@
 <script setup>
 import AppButton from "./AppButton.vue";
 import { NavStates } from "../utilities/constants";
+import { useUserStore } from "../stores/useUserStore";
 
-const props = defineProps({
-    navState: {
-        type: String,
-        default: NavStates.FULL,
-        validator: (value) => Object.values(NavStates).includes(value),
-    },
-});
+const userStore = useUserStore();
 </script>
