@@ -21,8 +21,9 @@ const props = defineProps({
         required: true,
     },
     to: {
-        type: String,
+        type: [String, Object],
         required: false,
+        default: null,
     },
     bgColor: {
         type: String,
@@ -38,7 +39,11 @@ const router = useRouter();
 
 function handleClick() {
     if (props.to) {
-        router.push(props.to); // Navigate to the route if 'to' prop is provided
+        if (typeof props.to === "string") {
+            router.push(props.to);
+        } else if (typeof props.to === "object") {
+            router.push({ ...props.to });
+        }
     }
 }
 </script>

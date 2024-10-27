@@ -33,6 +33,7 @@
                             label="Edit"
                             bgColor="bg-electric-blue-600"
                             textColor="text-white"
+                            @click="handleEdit(list.song_list_id)"
                         />
                         <AppButton
                             label="Delete"
@@ -49,7 +50,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import AppButton from "./AppButton.vue";
 import {
     getSongLists,
@@ -68,6 +69,7 @@ defineProps({
 const songLists = ref([]);
 const userStore = useUserStore();
 const route = useRoute();
+const router = useRouter();
 
 const fetchSongLists = async () => {
     if (userStore.isAuthenticated) {
@@ -118,6 +120,13 @@ const handleAddSong = async (songListId) => {
     } else {
         alert("Failed to add song to the list.");
     }
+};
+
+const handleEdit = (songListId) => {
+    router.push({
+        path: "/view-list-page",
+        query: { song_list_id: songListId },
+    });
 };
 
 onMounted(() => {

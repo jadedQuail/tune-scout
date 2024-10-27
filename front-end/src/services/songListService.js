@@ -102,3 +102,58 @@ export async function addSongToList(title, artist, songListId) {
         return false;
     }
 }
+
+export async function getSongsFromList(songListId) {
+    console.log("Fetching songs for list with ID:", songListId);
+
+    try {
+        const response = await fetch(
+            `${baseUrl}/song-lists/${songListId}/songs`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Songs fetched successfully:", data);
+            return data;
+        } else if (response.status === 404) {
+            console.log("No songs found for this list.");
+            return [];
+        } else {
+            console.log("Failed to fetch songs.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching songs:", error);
+        return null;
+    }
+}
+
+export async function deleteSong(songId) {
+    console.log("Deleting song with ID:", songId);
+
+    try {
+        const response = await fetch(`${baseUrl}/songs/${songId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            console.log("Song deleted successfully!");
+            return true;
+        } else {
+            console.log("Failed to delete song.");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error deleting song:", error);
+        return false;
+    }
+}

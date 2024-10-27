@@ -156,6 +156,50 @@ app.post("/add-song-to-list", async (req, res) => {
     }
 });
 
+app.get("/song-lists/:song_list_id/songs", async (req, res) => {
+    const { song_list_id } = req.params;
+
+    if (!song_list_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `SELECT song_id, title, artist FROM songs WHERE song_list_id = ?`;
+        const [rows] = await db.pool.execute(query, [song_list_id]);
+
+        if (rows.length > 0) {
+            res.status(200).json(rows);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
+app.delete("/songs/:song_id", async (req, res) => {
+    const { song_id } = req.params;
+
+    if (!song_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `DELETE FROM songs WHERE song_id = ?`;
+        const [result] = await db.pool.execute(query, [song_id]);
+
+        if (result.affectedRows > 0) {
+            res.sendStatus(204);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Example app is listening on port ${PORT}.`);
 });
