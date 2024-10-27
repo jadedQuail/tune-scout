@@ -24,3 +24,28 @@ export async function createSongList(name, userId) {
         return false;
     }
 }
+
+export async function getSongLists(userId) {
+    console.log("Fetching song lists for user:", userId);
+
+    try {
+        const response = await fetch(`${baseUrl}/song-lists/${userId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Song lists fetched successfully:", data);
+            return data;
+        } else {
+            console.log("Failed to fetch song lists.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching song lists:", error);
+        return null;
+    }
+}

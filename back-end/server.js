@@ -98,6 +98,24 @@ app.post("/create-song-list", async (req, res) => {
     }
 });
 
+app.get("/song-lists/:user_id", async (req, res) => {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `SELECT song_list_id, name FROM song_lists WHERE user_id = ?`;
+        const [rows] = await db.pool.execute(query, [user_id]);
+
+        res.status(200).json(rows); // Send the result as JSON
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500); // Internal Server Error
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Example app is listening on port ${PORT}.`);
 });

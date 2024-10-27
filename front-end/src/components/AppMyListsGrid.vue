@@ -15,11 +15,11 @@
                 />
             </div>
             <div
-                v-for="box in 7"
-                :key="box"
+                v-for="list in songLists"
+                :key="list.song_list_id"
                 class="bg-white w-52 h-52 flex flex-col text-black font-bold rounded-md shadow-md p-5"
             >
-                <span class="mb-auto text-center mt-5"> My List Name </span>
+                <span class="mb-auto text-center mt-5"> {{ list.name }} </span>
                 <div class="flex justify-between mt-auto w-full">
                     <AppButton
                         label="Edit"
@@ -38,5 +38,26 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import AppButton from "./AppButton.vue";
+import { getSongLists } from "../services/songListService";
+import { useUserStore } from "../stores/useUserStore";
+
+const songLists = ref([]);
+const userStore = useUserStore();
+
+const fetchSongLists = async () => {
+    if (userStore.isAuthenticated) {
+        const lists = await getSongLists(userStore.userId);
+        if (lists) {
+            songLists.value = lists;
+        } else {
+            console.error("Failed to fetch song lists.");
+        }
+    }
+};
+
+onMounted(() => {
+    fetchSongLists();
+});
 </script>
