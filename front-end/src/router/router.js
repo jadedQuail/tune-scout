@@ -8,6 +8,7 @@ import ResultsPage from "../pages/ResultsPage.vue";
 import MyListsPage from "../pages/MyListsPage.vue";
 import CreateListPage from "../pages/CreateListPage.vue";
 import AddSongToListPage from "../pages/AddSongToListPage.vue";
+import ViewListPage from "../pages/ViewListPage.vue";
 
 const routes = [
     { path: "/", name: "Home", component: HomePage },
@@ -30,6 +31,12 @@ const routes = [
         path: "/add-song-to-list",
         name: "AddSongToList",
         component: AddSongToListPage,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/view-list-page",
+        name: "ViewList",
+        component: ViewListPage,
         meta: { requiresAuth: true },
     },
 ];
