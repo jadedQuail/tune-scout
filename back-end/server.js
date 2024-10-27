@@ -109,10 +109,32 @@ app.get("/song-lists/:user_id", async (req, res) => {
         const query = `SELECT song_list_id, name FROM song_lists WHERE user_id = ?`;
         const [rows] = await db.pool.execute(query, [user_id]);
 
-        res.status(200).json(rows); // Send the result as JSON
+        res.status(200).json(rows);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500); // Internal Server Error
+        res.sendStatus(500);
+    }
+});
+
+app.delete("/song-lists/:song_list_id", async (req, res) => {
+    const { song_list_id } = req.params;
+
+    if (!song_list_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `DELETE FROM song_lists WHERE song_list_id = ?`;
+        const [result] = await db.pool.execute(query, [song_list_id]);
+
+        if (result.affectedRows > 0) {
+            res.sendStatus(204);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
     }
 });
 

@@ -49,3 +49,27 @@ export async function getSongLists(userId) {
         return null;
     }
 }
+
+export async function deleteSongList(songListId) {
+    console.log("Deleting song list with ID:", songListId);
+
+    try {
+        const response = await fetch(`${baseUrl}/song-lists/${songListId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            console.log("Song list deleted successfully!");
+            return true;
+        } else {
+            console.log("Failed to delete song list.");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error deleting song list:", error);
+        return false;
+    }
+}

@@ -19,12 +19,14 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/useUserStore";
 import { createSongList } from "../services/songListService";
 import AppButton from "../components/AppButton.vue";
 
 const newListName = ref("");
 const userStore = useUserStore();
+const router = useRouter();
 
 const createList = async () => {
     if (!newListName.value) {
@@ -42,6 +44,7 @@ const createList = async () => {
     if (success) {
         alert("Song list created successfully!");
         newListName.value = "";
+        router.push("/my-lists");
     } else {
         alert("Failed to create song list. Please try again.");
     }

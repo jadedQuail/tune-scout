@@ -30,6 +30,7 @@
                         label="Delete"
                         bgColor="bg-electric-blue-600"
                         textColor="text-white"
+                        @click="handleDelete(list.song_list_id)"
                     />
                 </div>
             </div>
@@ -40,7 +41,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import AppButton from "./AppButton.vue";
-import { getSongLists } from "../services/songListService";
+import { getSongLists, deleteSongList } from "../services/songListService";
 import { useUserStore } from "../stores/useUserStore";
 
 const songLists = ref([]);
@@ -54,6 +55,28 @@ const fetchSongLists = async () => {
         } else {
             console.error("Failed to fetch song lists.");
         }
+    }
+};
+
+const handleDelete = async (songListId) => {
+    if (!userStore.isAuthenticated) {
+        alert("You need to be logged in to delete a song list.");
+        return;
+    }
+
+    const confirmDelete = window.confirm(
+        "Are you sure you want to delete this song list?\nIt cannot be recovered once it's gone."
+    );
+    if (!confirmDelete) {
+        return;
+    }
+
+    const success = await deleteSongList(songListId);
+    if (success) {
+        alert("Song list deleted successfully!");
+        fetchSongLists();
+    } else {
+        alert("Failed to delete song list.");
     }
 };
 
