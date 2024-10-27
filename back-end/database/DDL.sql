@@ -26,6 +26,7 @@ CREATE TABLE `songs` (
     `song_id` int NOT NULL AUTO_INCREMENT,
     `song_list_id` int NOT NULL,
     `title` varchar(150) NOT NULL,
+    `artist` varchar(100) NOT NULL,
     PRIMARY KEY (`song_id`),
     FOREIGN KEY (`song_list_id`) REFERENCES `song_lists` (`song_list_id`) ON DELETE CASCADE
 );

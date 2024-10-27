@@ -36,7 +36,7 @@ app.post("/register", async (req, res) => {
 
         const user_id = result.insertId;
 
-        res.status(201).json({ user_id });
+        res.status(201).json({ user_id, username });
     } catch (err) {
         console.error(err);
         if (err.code === "ER_DUP_ENTRY") {
@@ -132,6 +132,24 @@ app.delete("/song-lists/:song_list_id", async (req, res) => {
         } else {
             res.sendStatus(404);
         }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
+app.post("/add-song-to-list", async (req, res) => {
+    const { title, artist, song_list_id } = req.body;
+
+    if (!title || !artist || !song_list_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `INSERT INTO songs (title, artist, song_list_id) VALUES (?, ?, ?)`;
+        await db.pool.execute(query, [title, artist, song_list_id]);
+
+        res.sendStatus(201);
     } catch (err) {
         console.error(err);
         res.sendStatus(500);

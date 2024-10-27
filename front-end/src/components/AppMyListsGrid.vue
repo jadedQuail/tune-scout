@@ -20,18 +20,26 @@
                 class="bg-white w-52 h-52 flex flex-col text-black font-bold rounded-md shadow-md p-5"
             >
                 <span class="mb-auto text-center mt-5"> {{ list.name }} </span>
-                <div class="flex justify-between mt-auto w-full">
+                <div class="flex justify-center mt-auto w-full">
                     <AppButton
-                        label="Edit"
-                        bgColor="bg-electric-blue-600"
+                        v-if="addMode"
+                        label="Add Here"
+                        bgColor="bg-green-600"
                         textColor="text-white"
                     />
-                    <AppButton
-                        label="Delete"
-                        bgColor="bg-electric-blue-600"
-                        textColor="text-white"
-                        @click="handleDelete(list.song_list_id)"
-                    />
+                    <div v-else class="flex justify-between w-full">
+                        <AppButton
+                            label="Edit"
+                            bgColor="bg-electric-blue-600"
+                            textColor="text-white"
+                        />
+                        <AppButton
+                            label="Delete"
+                            bgColor="bg-electric-blue-600"
+                            textColor="text-white"
+                            @click="handleDelete(list.song_list_id)"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,6 +51,13 @@ import { ref, onMounted } from "vue";
 import AppButton from "./AppButton.vue";
 import { getSongLists, deleteSongList } from "../services/songListService";
 import { useUserStore } from "../stores/useUserStore";
+
+defineProps({
+    addMode: {
+        type: Boolean,
+        default: false,
+    },
+});
 
 const songLists = ref([]);
 const userStore = useUserStore();

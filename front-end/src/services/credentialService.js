@@ -11,14 +11,15 @@ export async function registerUser(username, password) {
         });
 
         if (response.ok) {
+            const user = await response.json();
             console.log("User registered successfully!");
-            return true;
+            return { success: true, user };
         } else if (response.status === 409) {
             console.log("Username already exists.");
-            return false;
+            return { success: false };
         } else {
             console.log("Registration failed.");
-            return false;
+            return { success: false };
         }
     } catch (error) {
         console.log("Error:", error);

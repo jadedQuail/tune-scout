@@ -1,7 +1,7 @@
 <template>
     <div>
         <AppNavBar />
-        <AppMyListsGrid :addMode="false" />
+        <AppMyListsGrid :addMode="true" />
     </div>
 </template>
 

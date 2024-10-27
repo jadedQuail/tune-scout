@@ -73,10 +73,11 @@ const handleSignUp = async () => {
     }
 
     const response = await registerUser(username.value, password.value);
-    if (response && response.user_id) {
+
+    if (response && response.success) {
         userStore.setUser({
-            userId: response.user_id,
-            username: username.value,
+            userId: response.user.user_id,
+            username: response.user.username,
         });
         alert("User registered successfully!");
         router.push("/");
