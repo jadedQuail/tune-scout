@@ -73,3 +73,32 @@ export async function deleteSongList(songListId) {
         return false;
     }
 }
+
+export async function addSongToList(title, artist, songListId) {
+    console.log("Adding song to list:", {
+        title,
+        artist,
+        song_list_id: songListId,
+    });
+
+    try {
+        const response = await fetch(`${baseUrl}/add-song-to-list`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, artist, song_list_id: songListId }),
+        });
+
+        if (response.ok) {
+            console.log("Song added to list successfully!");
+            return true;
+        } else {
+            console.log("Failed to add song to list.");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error adding song to list:", error);
+        return false;
+    }
+}

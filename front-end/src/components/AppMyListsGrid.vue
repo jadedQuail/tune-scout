@@ -26,6 +26,7 @@
                         label="Add Here"
                         bgColor="bg-green-600"
                         textColor="text-white"
+                        @click="handleAddSong(list.song_list_id)"
                     />
                     <div v-else class="flex justify-between w-full">
                         <AppButton
@@ -48,8 +49,13 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import AppButton from "./AppButton.vue";
-import { getSongLists, deleteSongList } from "../services/songListService";
+import {
+    getSongLists,
+    deleteSongList,
+    addSongToList,
+} from "../services/songListService";
 import { useUserStore } from "../stores/useUserStore";
 
 defineProps({
@@ -61,6 +67,7 @@ defineProps({
 
 const songLists = ref([]);
 const userStore = useUserStore();
+const route = useRoute();
 
 const fetchSongLists = async () => {
     if (userStore.isAuthenticated) {
@@ -92,6 +99,24 @@ const handleDelete = async (songListId) => {
         fetchSongLists();
     } else {
         alert("Failed to delete song list.");
+    }
+};
+
+const handleAddSong = async (songListId) => {
+    const title = route.query.title;
+    const artist = route.query.artist;
+
+    if (!title || !artist) {
+        alert("Song details are missing.");
+        return;
+    }
+
+    const success = await addSongToList(title, artist, songListId);
+
+    if (success) {
+        alert(`Song "${title}" by "${artist}" added to the list successfully!`);
+    } else {
+        alert("Failed to add song to the list.");
     }
 };
 

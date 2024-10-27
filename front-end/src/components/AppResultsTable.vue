@@ -46,7 +46,13 @@
                             >
                                 <AppButton
                                     label="Add to List"
-                                    to="/add-song-to-list"
+                                    :to="{
+                                        path: '/add-song-to-list',
+                                        query: {
+                                            title: song.name,
+                                            artist: song.artist,
+                                        },
+                                    }"
                                 />
                             </td>
                         </tr>
