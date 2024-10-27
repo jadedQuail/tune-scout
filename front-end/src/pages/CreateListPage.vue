@@ -1,11 +1,11 @@
 <template>
     <div>
         <AppNavBar />
-        <AppSearchDialog />
+        <AppCreateListDialog />
     </div>
 </template>
 
 <script setup>
 import AppNavBar from "../components/AppNavBar.vue";
-import AppSearchDialog from "../components/AppSearchDialog.vue";
+import AppCreateListDialog from "../components/AppCreateListDialog.vue";
 </script>

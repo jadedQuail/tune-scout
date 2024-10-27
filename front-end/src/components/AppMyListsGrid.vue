@@ -4,7 +4,18 @@
     >
         <div class="flex flex-wrap gap-4 p-4 justify-center w-full mt-20">
             <div
-                v-for="box in 601"
+                class="bg-white w-52 h-52 flex flex-col text-black font-bold rounded-md shadow-md p-5"
+            >
+                <span class="mb-auto text-center mt-5"> New List </span>
+                <AppButton
+                    label="+"
+                    bgColor="bg-electric-blue-600"
+                    textColor="text-white"
+                    to="/create-list"
+                />
+            </div>
+            <div
+                v-for="box in 7"
                 :key="box"
                 class="bg-white w-52 h-52 flex flex-col text-black font-bold rounded-md shadow-md p-5"
             >

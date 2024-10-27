@@ -3,21 +3,24 @@ import { NavStates } from "../utilities/constants";
 
 export const useUserStore = defineStore("user", {
     state: () => ({
-        user: null,
+        username: null,
+        userId: null,
         navState: NavStates.FULL,
     }),
 
     getters: {
-        isAuthenticated: (state) => state.user !== null,
+        isAuthenticated: (state) => state.userId !== null,
     },
 
     actions: {
-        setUser(userData) {
-            this.user = userData;
+        setUser({ userId, username }) {
+            this.userId = userId;
+            this.username = username;
             this.navState = NavStates.LOGGED_IN;
         },
         clearUser() {
-            this.user = null;
+            this.userId = null;
+            this.username = null;
             this.navState = NavStates.FULL;
         },
         setNavState(newState) {

@@ -19,6 +19,7 @@ app.use(express.json());
 
 // ROUTES
 
+// Register user
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -28,8 +29,14 @@ app.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const query = `INSERT INTO users (username, password) VALUES (?, ?)`;
-        await db.pool.execute(query, [username, hashedPassword]);
-        res.sendStatus(201);
+        const [result] = await db.pool.execute(query, [
+            username,
+            hashedPassword,
+        ]);
+
+        const user_id = result.insertId;
+
+        res.status(201).json({ user_id });
     } catch (err) {
         console.error(err);
         if (err.code === "ER_DUP_ENTRY") {
@@ -39,6 +46,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
+// Validate login request
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -62,9 +70,28 @@ app.post("/login", async (req, res) => {
         }
 
         res.json({
-            id: user.user_id,
+            user_id: user.user_id,
             username: user.username,
         });
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
+// Create new list for a user
+app.post("/create-song-list", async (req, res) => {
+    const { name, user_id } = req.body;
+
+    if (!name || !user_id) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `INSERT INTO song_lists (name, user_id) VALUES (?, ?)`;
+        await db.pool.execute(query, [name, user_id]);
+
+        res.sendStatus(201);
     } catch (err) {
         console.error(err);
         res.sendStatus(500);

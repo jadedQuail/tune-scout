@@ -16,11 +16,12 @@
         <div class="flex space-x-4">
             <template
                 v-if="
-                    userStore.navState === NavStates.LOGGED_IN && userStore.user
+                    userStore.navState === NavStates.LOGGED_IN &&
+                    userStore.isAuthenticated
                 "
             >
                 <span class="text-white text-2xl">{{
-                    userStore.user.username
+                    userStore.username
                 }}</span>
             </template>
             <template v-else-if="userStore.navState === NavStates.FULL">

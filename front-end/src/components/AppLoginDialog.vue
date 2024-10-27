@@ -55,7 +55,10 @@ const handleLogin = async () => {
     const response = await loginUser(username.value, password.value);
 
     if (response.success) {
-        userStore.setUser({ username: response.user.username });
+        userStore.setUser({
+            userId: response.user.user_id,
+            username: response.user.username,
+        });
         alert("Login successful");
         router.push("/");
     } else {
