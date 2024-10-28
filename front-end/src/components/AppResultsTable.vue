@@ -2,14 +2,21 @@
     <div class="bg-electric-blue-600 min-h-screen flex flex-col items-center">
         <div class="mt-6 w-3/4 mx-auto">
             <div v-if="currentSongs.length > 0">
-                <div class="mt-20 text-2xl text-white">
-                    Click <strong>Add to List</strong> next to a search result
-                    to add the song to one of your lists.
+                <div v-if="viewMode === TableViewMode.SEARCH">
+                    <div class="mt-20 text-2xl text-white">
+                        Click <strong>Add to List</strong> next to a search
+                        result to add the song to one of your lists.
+                    </div>
+                    <div class="mt-6 text-2xl text-white">
+                        Don't like your results? Click <strong>Home</strong> to
+                        go back to the main site page to perform another search!
+                        &#127901;
+                    </div>
                 </div>
-                <div class="mt-6 text-2xl text-white">
-                    Don't like your results? Click <strong>Home</strong> to go
-                    back to the main site page to perform another search!
-                    &#127901;
+                <div v-else>
+                    <div class="mt-20 text-4xl text-white text-center">
+                        {{ songListTitle }}
+                    </div>
                 </div>
                 <table
                     class="mt-10 w-full text-left border-collapse border-2 border-gray-200"
@@ -65,9 +72,21 @@
                     </tbody>
                 </table>
             </div>
-            <div v-else class="text-2xl text-white text-center mt-20">
-                No results found. Go back to <strong>Home</strong> and try
-                another search.
+            <div v-else>
+                <div
+                    v-if="viewMode === TableViewMode.SEARCH"
+                    class="text-2xl text-white text-center mt-20"
+                >
+                    No results found. Go back to <strong>Home</strong> and try
+                    another search.
+                </div>
+                <div
+                    v-if="viewMode === TableViewMode.VIEW_LIST"
+                    class="text-2xl text-white text-center mt-20"
+                >
+                    This list is empty! Go search for some songs and add them
+                    here. &#127901;
+                </div>
             </div>
         </div>
     </div>
@@ -83,6 +102,7 @@ import { getSongsFromList, deleteSong } from "../services/songListService";
 const searchTerm = ref("");
 const currentSongs = ref([]);
 const viewMode = ref(TableViewMode.SEARCH);
+const songListTitle = ref("");
 
 const route = useRoute();
 
@@ -146,9 +166,8 @@ onMounted(async () => {
     searchTerm.value = route.query.q || "";
     const listId = route.query.song_list_id || null;
 
-    console.log(listId);
-
     if (listId) {
+        songListTitle.value = route.query.song_list_name;
         viewMode.value = TableViewMode.VIEW_LIST;
         await loadListSongs(listId);
     } else {

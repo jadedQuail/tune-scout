@@ -33,7 +33,7 @@
                             label="Edit"
                             bgColor="bg-electric-blue-600"
                             textColor="text-white"
-                            @click="handleEdit(list.song_list_id)"
+                            @click="handleEdit(list.song_list_id, list.name)"
                         />
                         <AppButton
                             label="Delete"
@@ -122,10 +122,10 @@ const handleAddSong = async (songListId) => {
     }
 };
 
-const handleEdit = (songListId) => {
+const handleEdit = (songListId, songListName) => {
     router.push({
         path: "/view-list-page",
-        query: { song_list_id: songListId },
+        query: { song_list_id: songListId, song_list_name: songListName },
     });
 };
 
