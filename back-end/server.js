@@ -89,9 +89,10 @@ app.post("/create-song-list", async (req, res) => {
 
     try {
         const query = `INSERT INTO song_lists (name, user_id) VALUES (?, ?)`;
-        await db.pool.execute(query, [name, user_id]);
+        const [result] = await db.pool.execute(query, [name, user_id]);
 
-        res.sendStatus(201);
+        const song_list_id = result.insertId;
+        res.status(201).json({ song_list_id });
     } catch (err) {
         console.error(err);
         res.sendStatus(500);

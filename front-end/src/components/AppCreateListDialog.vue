@@ -19,14 +19,15 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "../stores/useUserStore";
-import { createSongList } from "../services/songListService";
+import { createSongList, addSongToList } from "../services/songListService";
 import AppButton from "../components/AppButton.vue";
 
 const newListName = ref("");
 const userStore = useUserStore();
 const router = useRouter();
+const route = useRoute();
 
 const createList = async () => {
     if (!newListName.value) {
@@ -39,10 +40,27 @@ const createList = async () => {
         return;
     }
 
-    const success = await createSongList(newListName.value, userStore.userId);
+    const response = await createSongList(newListName.value, userStore.userId);
 
-    if (success) {
+    if (response.success) {
         alert("Song list created successfully!");
+
+        const newListId = response.song_list_id;
+        const title = route.query.title;
+        const artist = route.query.artist;
+
+        if (title && artist) {
+            const songAdded = await addSongToList(title, artist, newListId);
+
+            if (songAdded) {
+                alert(
+                    `Song "${title}" by "${artist}" added to the new list successfully!`
+                );
+            } else {
+                alert("Failed to add song to the new list.");
+            }
+        }
+
         newListName.value = "";
         router.push("/my-lists");
     } else {

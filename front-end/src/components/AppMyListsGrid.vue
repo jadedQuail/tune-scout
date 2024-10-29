@@ -11,7 +11,7 @@
                     label="+"
                     bgColor="bg-electric-blue-600"
                     textColor="text-white"
-                    to="/create-list"
+                    @click="handleCreateList"
                 />
             </div>
             <div
@@ -126,6 +126,13 @@ const handleEdit = (songListId, songListName) => {
     router.push({
         path: "/view-list-page",
         query: { song_list_id: songListId, song_list_name: songListName },
+    });
+};
+
+const handleCreateList = () => {
+    router.push({
+        path: "/create-list",
+        query: { ...route.query },
     });
 };
 

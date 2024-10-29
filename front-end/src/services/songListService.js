@@ -13,15 +13,16 @@ export async function createSongList(name, userId) {
         });
 
         if (response.ok) {
+            const data = await response.json();
             console.log("Song list created successfully!");
-            return true;
+            return { success: true, song_list_id: data.song_list_id };
         } else {
             console.log("Failed to create song list.");
-            return false;
+            return { success: false };
         }
     } catch (error) {
         console.error("Error creating song list:", error);
-        return false;
+        return { success: false };
     }
 }
 
