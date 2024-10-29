@@ -120,6 +120,8 @@ const handleAddSong = async (songListId) => {
     } else {
         alert("Failed to add song to the list.");
     }
+
+    router.push("/my-lists");
 };
 
 const handleEdit = (songListId, songListName) => {
