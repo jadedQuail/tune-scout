@@ -1,7 +1,26 @@
 <template>
-    <div
-        class="bg-electric-blue-600 min-h-screen flex items-start justify-center"
-    >
+    <div class="bg-electric-blue-600 min-h-screen flex flex-col items-center">
+        <div v-if="!addMode" class="w-1/4 mt-20 flex flex-col items-center">
+            <div
+                class="bg-white w-full flex flex-col text-black font-bold rounded-md shadow-md p-5"
+            >
+                <span class="mb-3 text-center mt-2 text-2xl"
+                    >Create Multiple Lists From Text File</span
+                >
+                <span class="mb-3 text-center mt-2 text-md"
+                    >For each song list you would like to create, please create
+                    another row in your text file.</span
+                >
+                <div class="flex justify-center items-center w-full">
+                    <input
+                        type="file"
+                        accept=".txt"
+                        @change="handleFileUpload"
+                        class="px-4 py-2 rounded-lg w-full text-lg"
+                    />
+                </div>
+            </div>
+        </div>
         <div class="flex flex-wrap gap-4 p-4 justify-center w-full mt-20">
             <div
                 class="bg-white w-52 h-52 flex flex-col text-black font-bold rounded-md shadow-md p-5"
@@ -56,6 +75,7 @@ import {
     getSongLists,
     deleteSongList,
     addSongToList,
+    createSongList,
 } from "../services/songListService";
 import { useUserStore } from "../stores/useUserStore";
 
@@ -136,6 +156,35 @@ const handleCreateList = () => {
         path: "/create-list",
         query: { ...route.query },
     });
+};
+
+const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        const content = e.target.result;
+        const listNames = content
+            .split("\n")
+            .map((name) => name.trim())
+            .filter((name) => name);
+
+        if (listNames.length > 0) {
+            for (const name of listNames) {
+                const success = await createSongList(name, userStore.userId);
+                if (!success) {
+                    console.error(`Failed to create list: ${name}`);
+                }
+            }
+            alert("Lists created successfully!");
+            fetchSongLists();
+        } else {
+            alert("The file appears to be empty or invalid.");
+        }
+    };
+
+    reader.readAsText(file);
 };
 
 onMounted(() => {

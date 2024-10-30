@@ -17,6 +17,10 @@
                     <div class="mt-20 text-4xl text-white text-center">
                         {{ songListTitle }}
                     </div>
+                    <div class="mt-6 text-2xl text-white text-center">
+                        Click on the <strong>Remove</strong> button next to a
+                        song to remove it from your list.
+                    </div>
                 </div>
                 <table
                     class="mt-10 w-full text-left border-collapse border-2 border-gray-200"
