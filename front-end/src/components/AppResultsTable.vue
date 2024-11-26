@@ -71,6 +71,16 @@
                                     label="Remove"
                                     @click="handleRemove(song.song_id)"
                                 />
+                                <AppButton
+                                    class="ml-3"
+                                    label="View Fun Fact"
+                                    @click="
+                                        handleFunFactClick(
+                                            song.title,
+                                            song.artist
+                                        )
+                                    "
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -102,6 +112,7 @@ import { useRoute } from "vue-router";
 import AppButton from "./AppButton.vue";
 import { TableViewMode } from "../utilities/constants";
 import { getSongsFromList, deleteSong } from "../services/songListService";
+import { fetchFunFact } from "../services/triviaService";
 
 const searchTerm = ref("");
 const currentSongs = ref([]);
@@ -163,6 +174,15 @@ const handleRemove = async (songId) => {
     } catch (error) {
         console.error("Error removing the song:", error);
         alert("An error occurred while removing the song.");
+    }
+};
+
+const handleFunFactClick = async (title, artist) => {
+    try {
+        const funFact = await fetchFunFact(title, artist);
+        alert(funFact);
+    } catch (error) {
+        alert("An error occurred while fetching the fun fact.");
     }
 };
 
