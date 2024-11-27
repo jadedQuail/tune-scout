@@ -55,41 +55,57 @@
                             <td
                                 class="border-2 border-gray-200 px-4 py-2 text-white text-3xl"
                             >
-                                <AppButton
-                                    v-if="viewMode === TableViewMode.SEARCH"
-                                    label="Add to List"
-                                    :to="{
-                                        path: '/add-song-to-list',
-                                        query: {
-                                            title: song.title,
-                                            artist: song.artist,
-                                        },
-                                    }"
-                                />
-                                <AppButton
-                                    v-else
-                                    label="Remove"
-                                    @click="handleRemove(song.song_id)"
-                                />
-                                <AppButton
-                                    class="ml-3"
-                                    label="View Fun Fact"
-                                    @click="
-                                        handleFunFactClick(
-                                            song.title,
-                                            song.artist
-                                        )
-                                    "
-                                />
-                                <AppButton
-                                    class="ml-3"
-                                    label="View Recommendations"
-                                    @click="
-                                        handleRecommendationClick(
-                                            song.title
-                                        )
-                                    "
-                                />
+                                <div class="flex flex-col space-y-3">
+                                    <AppButton
+                                        v-if="viewMode === TableViewMode.SEARCH"
+                                        label="Add to List"
+                                        :to="{
+                                            path: '/add-song-to-list',
+                                            query: {
+                                                title: song.title,
+                                                artist: song.artist,
+                                            },
+                                        }"
+                                    />
+                                    <AppButton
+                                        v-else
+                                        label="Remove"
+                                        @click="handleRemove(song.song_id)"
+                                    />
+                                    <AppButton
+                                        label="View Fun Fact"
+                                        @click="
+                                            handleFunFactClick(
+                                                song.title,
+                                                song.artist
+                                            )
+                                        "
+                                    />
+                                    <AppButton
+                                        label="View Recommendations"
+                                        @click="
+                                            handleRecommendationClick(
+                                                song.title
+                                            )
+                                        "
+                                    />
+                                    <AppButton
+                                        label="View Rankings by Chart"
+                                        @click = "
+                                            handleChartRankingsClick(
+                                                song.title
+                                            )
+                                        "
+                                    />
+                                    <AppButton
+                                        label="View Rankings by Country"
+                                        @click = "
+                                            handleCountryRankingsClick(
+                                                song.title
+                                            )
+                                        "
+                                    />
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -123,6 +139,7 @@ import { TableViewMode } from "../utilities/constants";
 import { getSongsFromList, deleteSong } from "../services/songListService";
 import { fetchFunFact } from "../services/triviaService";
 import { fetchRecommendations } from "../services/recommendationService";
+import { fetchChartRankings, fetchCountryRankings } from "../services/chartService";
 
 const searchTerm = ref("");
 const currentSongs = ref([]);
@@ -202,6 +219,24 @@ const handleRecommendationClick = async (title) => {
         alert(recommendations);
     } catch (error) {
         alert("An error occurred while fetching the recommendations.");
+    }
+}
+
+const handleChartRankingsClick = async (title) => {
+    try {
+        const chartRankings = await fetchChartRankings(title);
+        alert(chartRankings);
+    } catch (error) {
+        alert("An error occurred while fetching the chart rankings.");
+    }
+}
+
+const handleCountryRankingsClick = async (title) => {
+    try {
+        const countryRankings = await fetchCountryRankings(title);
+        alert(countryRankings);
+    } catch (error) {
+        alert("An error occurred while fetching the country rankings.");
     }
 }
 
