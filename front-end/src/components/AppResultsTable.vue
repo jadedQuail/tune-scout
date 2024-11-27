@@ -81,6 +81,15 @@
                                         )
                                     "
                                 />
+                                <AppButton
+                                    class="ml-3"
+                                    label="View Recommendations"
+                                    @click="
+                                        handleRecommendationClick(
+                                            song.title
+                                        )
+                                    "
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -113,6 +122,7 @@ import AppButton from "./AppButton.vue";
 import { TableViewMode } from "../utilities/constants";
 import { getSongsFromList, deleteSong } from "../services/songListService";
 import { fetchFunFact } from "../services/triviaService";
+import { fetchRecommendations } from "../services/recommendationService";
 
 const searchTerm = ref("");
 const currentSongs = ref([]);
@@ -185,6 +195,15 @@ const handleFunFactClick = async (title, artist) => {
         alert("An error occurred while fetching the fun fact.");
     }
 };
+
+const handleRecommendationClick = async (title) => {
+    try {
+        const recommendations = await fetchRecommendations(title);
+        alert(recommendations);
+    } catch (error) {
+        alert("An error occurred while fetching the recommendations.");
+    }
+}
 
 onMounted(async () => {
     searchTerm.value = route.query.q || "";
