@@ -91,18 +91,22 @@
                                     />
                                     <AppButton
                                         label="View Rankings by Chart"
-                                        @click = "
-                                            handleChartRankingsClick(
+                                        @click="
+                                            handleChartRankingsClick(song.title)
+                                        "
+                                    />
+                                    <AppButton
+                                        label="View Rankings by Country"
+                                        @click="
+                                            handleCountryRankingsClick(
                                                 song.title
                                             )
                                         "
                                     />
                                     <AppButton
-                                        label="View Rankings by Country"
-                                        @click = "
-                                            handleCountryRankingsClick(
-                                                song.title
-                                            )
+                                        label="View Lyric Sample"
+                                        @click="
+                                            handleLyricSampleClick(song.title)
                                         "
                                     />
                                 </div>
@@ -139,7 +143,11 @@ import { TableViewMode } from "../utilities/constants";
 import { getSongsFromList, deleteSong } from "../services/songListService";
 import { fetchFunFact } from "../services/triviaService";
 import { fetchRecommendations } from "../services/recommendationService";
-import { fetchChartRankings, fetchCountryRankings } from "../services/chartService";
+import { fetchLyrics } from "../services/lyricsService";
+import {
+    fetchChartRankings,
+    fetchCountryRankings,
+} from "../services/chartService";
 
 const searchTerm = ref("");
 const currentSongs = ref([]);
@@ -220,7 +228,7 @@ const handleRecommendationClick = async (title) => {
     } catch (error) {
         alert("An error occurred while fetching the recommendations.");
     }
-}
+};
 
 const handleChartRankingsClick = async (title) => {
     try {
@@ -229,7 +237,7 @@ const handleChartRankingsClick = async (title) => {
     } catch (error) {
         alert("An error occurred while fetching the chart rankings.");
     }
-}
+};
 
 const handleCountryRankingsClick = async (title) => {
     try {
@@ -238,7 +246,16 @@ const handleCountryRankingsClick = async (title) => {
     } catch (error) {
         alert("An error occurred while fetching the country rankings.");
     }
-}
+};
+
+const handleLyricSampleClick = async (title) => {
+    try {
+        const lyricSample = await fetchLyrics(title);
+        alert(lyricSample);
+    } catch (error) {
+        alert("An error occurred while fetching the lyrics sample.");
+    }
+};
 
 onMounted(async () => {
     searchTerm.value = route.query.q || "";
